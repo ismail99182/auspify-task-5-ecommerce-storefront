@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>North &amp; Oak — Home goods &amp; everyday carry</title>
+  <meta name="description" content="North & Oak is a small shop for home goods and everyday carry: lamps, mugs, notebooks, backpacks and candles.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="#">North <span>&amp;</span> Oak</a>
+
+      <nav class="main-nav" aria-label="Main">
+        <a href="#shop">Shop</a>
+        <a href="#story">Our story</a>
+        <a href="#footer">Contact</a>
+      </nav>
+
+      <button class="cart-btn" id="cartOpenBtn" type="button" aria-label="Open shopping cart">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M6 7h15l-1.5 9h-12z"></path>
+          <path d="M6 7L5 3H2"></path>
+          <circle cx="9" cy="20" r="1.4"></circle>
+          <circle cx="18" cy="20" r="1.4"></circle>
+        </svg>
+        <span class="cart-btn-text">Cart</span>
+        <span class="cart-count" id="cartCount" aria-label="Items in cart">0</span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <!-- Short intro, not a big hero — the products are the point of this page. -->
+    <section class="intro wrap">
+      <h1>Useful things, made to last.</h1>
+      <p>We stock a short list of home goods and everyday carry from small makers.
+        No seasonal drops, no inflated prices — just the versions we use ourselves.</p>
+      <p class="intro-note">Free shipping on orders over $75 &nbsp;·&nbsp; 30-day returns</p>
+    </section>
+
+    <section class="wrap" id="shop">
+      <div class="toolbar">
+        <div class="search-box">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+            <circle cx="11" cy="11" r="7"></circle>
+            <path d="M21 21l-4.3-4.3"></path>
+          </svg>
+          <label class="sr-only" for="searchInput">Search products by name</label>
+          <input type="search" id="searchInput" placeholder="Search products…" autocomplete="off">
+        </div>
+
+        <div class="sort-box">
+          <label for="sortSelect">Sort by</label>
+          <select id="sortSelect">
+            <option value="featured">Featured</option>
+            <option value="price-low">Price: low to high</option>
+            <option value="price-high">Price: high to low</option>
+            <option value="rating">Rating</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="filters" id="categoryFilters" role="group" aria-label="Filter by category">
+        <button type="button" class="pill is-active" data-category="All">All</button>
+        <button type="button" class="pill" data-category="Lighting">Lighting</button>
+        <button type="button" class="pill" data-category="Kitchen">Kitchen</button>
+        <button type="button" class="pill" data-category="Stationery">Stationery</button>
+        <button type="button" class="pill" data-category="Carry">Carry</button>
+        <button type="button" class="pill" data-category="Home">Home</button>
+      </div>
+
+      <p class="results-count" id="resultsCount" aria-live="polite">Showing 14 products</p>
+
+      <div class="product-grid" id="productGrid"></div>
+
+      <div class="no-results" id="noResults" hidden>
+        <h2>Nothing matches that search</h2>
+        <p>Try a shorter word — “lamp”, “mug” or “notebook” — or clear the category filter.</p>
+        <button type="button" class="btn btn-dark" id="clearFiltersBtn">Clear search &amp; filters</button>
+      </div>
+    </section>
+
+    <section class="story wrap" id="story">
+      <h2>A small shop, on purpose</h2>
+      <p>North &amp; Oak started as a market stall selling reclaimed-oak boards and a few
+        lamps. We still keep the range short on purpose: if we would not have it at home,
+        we do not sell it.</p>
+    </section>
+  </main>
+
+  <footer class="site-footer" id="footer">
+    <div class="wrap footer-inner">
+      <p class="footer-logo">North &amp; Oak</p>
+      <p>Questions about an order? Write to hello@northandoak.example — we reply within a day or two.</p>
+      <p class="footer-small">Demo storefront built for a front-end internship task. No real orders are taken.</p>
+    </div>
+  </footer>
+
+  <!-- Cart drawer -->
+  <div class="overlay" id="cartOverlay" hidden></div>
+
+  <aside class="cart-drawer" id="cartDrawer" aria-hidden="true" aria-label="Shopping cart">
+    <div class="cart-head">
+      <h2>Your cart <span id="cartHeadCount"></span></h2>
+      <button type="button" class="icon-btn" id="cartCloseBtn" aria-label="Close cart">&times;</button>
+    </div>
+
+    <div class="cart-items" id="cartItems"></div>
+
+    <div class="cart-empty" id="cartEmpty">
+      <p><strong>Your cart is empty.</strong></p>
+      <p>When you add something, it will show up here.</p>
+      <button type="button" class="btn btn-dark" id="keepShoppingBtn">Keep shopping</button>
+    </div>
+
+    <div class="cart-foot" id="cartFoot" hidden>
+      <div class="cart-row">
+        <span>Subtotal</span>
+        <strong id="cartSubtotal">$0.00</strong>
+      </div>
+      <p class="cart-note" id="shippingNote"></p>
+      <p class="cart-note">Taxes calculated at checkout (in a real store).</p>
+      <button type="button" class="btn btn-accent btn-block" id="checkoutBtn">Checkout</button>
+    </div>
+  </aside>
+
+  <!-- Checkout demo modal -->
+  <div class="modal-backdrop" id="checkoutModal" hidden>
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="checkoutTitle">
+      <h2 id="checkoutTitle">Checkout is a demo</h2>
+      <p>This storefront is front-end only, so there is no payment step here.
+        In a live store this button would take you to a secure checkout.</p>
+      <p>Your cart has been kept as it is — nothing was charged and no order was placed.</p>
+      <button type="button" class="btn btn-dark" id="checkoutCloseBtn">Back to the shop</button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <script src="js/products.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
